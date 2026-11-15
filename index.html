@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Misha Automation Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geologica:wght@500;700;900&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: bold colour blocks. A cobalt hero with a working demo, projects as wide cards whose right half is a coloured pipeline panel, a yellow contact block to finish. One committed light theme. */
+:root{
+  --blue:#2438E8;
+  --ink:#0E1330;
+  --paper:#F3F5FA;
+  --white:#FFFFFF;
+  --yellow:#FFD23F;
+  --green:#12A871;
+  --muted:#59618A;
+  --rule:#DCE1EE;
+  --display:"Geologica", "Arial Black", system-ui, sans-serif;
+  --body:"Golos Text", "Segoe UI", system-ui, sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font:400 17px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+html[lang="uk"] .en, html[lang="en"] .uk{display:none !important}
+a{color:inherit;text-underline-offset:3px}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1160px;margin:0 auto;padding-inline:clamp(18px,4vw,40px)}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}
+
+/* hero */
+.hero{background:var(--blue);color:var(--white)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:22px}
+.who{font-family:var(--display);font-weight:700;font-size:17px}
+.lang{display:flex;gap:2px;border:1.5px solid rgba(255,255,255,.45);border-radius:999px;padding:3px}
+.lang button{font:600 13px var(--body);border:0;background:transparent;color:var(--white);padding:6px 13px;border-radius:999px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--white);color:var(--blue)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:56px;align-items:center;padding-block:48px 88px}
+.avail{display:inline-flex;align-items:center;gap:9px;font-weight:500;font-size:15px;background:rgba(255,255,255,.14);padding:7px 14px;border-radius:999px;margin:0 0 26px}
+.avail::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--yellow)}
+h1{font-weight:900;font-size:clamp(40px,6.3vw,80px);line-height:.98;letter-spacing:-0.03em}
+.lede{font-size:clamp(18px,1.7vw,21px);line-height:1.5;margin:26px 0 34px;max-width:30em;opacity:.92}
+.actions{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;font:600 16px var(--body);text-decoration:none;padding:15px 24px;border-radius:14px;border:2px solid transparent}
+.btn.yellow{background:var(--yellow);color:var(--ink)}
+.btn.ghost{border-color:rgba(255,255,255,.6);color:var(--white)}
+.btn.dark{background:var(--ink);color:var(--white)}
+
+/* demo card */
+.demo{background:var(--white);color:var(--ink);border-radius:24px;padding:26px;box-shadow:0 40px 70px -30px rgba(8,12,60,.6);transform:rotate(1.2deg)}
+.demo h2{font-size:19px;font-weight:700}
+.demo .hint{font-size:14.5px;color:var(--muted);margin:4px 0 16px}
+.demo form{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.demo label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.demo input{flex:1 1 150px;min-width:0;font:500 16px var(--body);padding:13px 14px;border-radius:12px;border:2px solid var(--rule);background:var(--paper);color:var(--ink)}
+.demo button{font:600 15px var(--body);padding:13px 18px;border-radius:12px;border:0;background:var(--blue);color:var(--white);cursor:pointer}
+.demo button:disabled{opacity:.6}
+.pipe{display:grid;grid-template-columns:repeat(3,1fr);position:relative;margin-bottom:20px}
+.pipe::before{content:"";position:absolute;left:17%;right:17%;top:23px;height:3px;background:var(--rule)}
+.stage{position:relative;text-align:center;font-size:13.5px;font-weight:500;color:var(--muted)}
+.stage i{display:grid;place-items:center;width:48px;height:48px;margin:0 auto 8px;border-radius:14px;background:var(--white);border:3px solid var(--rule);font:700 17px var(--display);font-style:normal;color:var(--muted);transition:background-color .25s,border-color .25s,color .25s}
+.stage.run i{border-color:var(--blue);color:var(--blue)}
+.stage.on i{background:var(--green);border-color:var(--green);color:var(--white)}
+.tg{background:var(--paper);border-radius:16px 16px 16px 4px;padding:14px 16px}
+.tg .from{font-size:13px;font-weight:600;color:var(--blue);margin-bottom:3px}
+.tg p{margin:0;font-size:15px;line-height:1.45}
+.tg .meta{font-size:12px;color:var(--muted);text-align:right;margin-top:4px}
+.log{font:12.5px/1.75 ui-monospace,Menlo,Consolas,monospace;color:var(--muted);margin:14px 0 0;padding:0;list-style:none;min-height:5.3em}
+.log b{font-weight:400;color:var(--green)}
+
+/* tools band */
+.band{background:var(--ink);color:var(--white)}
+.band ul{list-style:none;margin:0;padding-block:20px;display:flex;flex-wrap:wrap;gap:8px 26px;font-weight:500;font-size:15px}
+.band li:first-child{color:var(--yellow)}
+
+/* sections */
+.sec{padding-block:88px}
+.sec h2{font-weight:900;font-size:clamp(32px,4.4vw,54px);letter-spacing:-0.025em;line-height:1.02}
+.sec .sub{color:var(--muted);font-size:19px;margin:14px 0 44px;max-width:34em}
+
+/* projects */
+.projects{display:grid;gap:22px}
+.proj{background:var(--white);border-radius:24px;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr)}
+.proj .txt{padding:clamp(24px,3.4vw,44px)}
+.proj h3{font-weight:700;font-size:clamp(22px,2.4vw,30px);line-height:1.12;letter-spacing:-0.015em;margin-bottom:14px}
+.proj p{margin:0 0 12px;color:var(--muted);max-width:34em}
+.stack{display:flex;flex-wrap:wrap;gap:6px;list-style:none;padding:0;margin:20px 0 0}
+.stack li{font-size:13.5px;font-weight:500;padding:5px 12px;border-radius:999px;background:var(--paper)}
+.panel{padding:clamp(24px,3.4vw,40px);display:flex;flex-direction:column;justify-content:center}
+.panel .cap{font-size:13.5px;font-weight:600;color:inherit;opacity:.8;margin:0 0 16px}
+.panel ol{list-style:none;margin:0;padding:0;counter-reset:s}
+.panel li{counter-increment:s;position:relative;padding:0 0 18px 46px;font-weight:500;font-size:16px;line-height:1.35;min-height:32px}
+.panel li::before{content:counter(s);position:absolute;left:0;top:-3px;width:30px;height:30px;border-radius:10px;display:grid;place-items:center;font:700 14px var(--display);background:var(--pn);color:var(--pt)}
+.panel li::after{content:"";position:absolute;left:14px;top:27px;bottom:-3px;width:2px;background:currentColor;opacity:.3}
+.panel li:last-child{padding-bottom:0}
+.panel li:last-child::after{display:none}
+.p-blue{background:var(--blue);color:var(--white);--pn:var(--white);--pt:var(--blue)}
+.p-yellow{background:var(--yellow);color:var(--ink);--pn:var(--ink);--pt:var(--yellow)}
+.p-ink{background:var(--ink);color:var(--white);--pn:var(--yellow);--pt:var(--ink)}
+.p-green{background:var(--green);color:var(--white);--pn:var(--white);--pt:var(--green)}
+
+/* building */
+.build{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.card{background:var(--white);border-radius:20px;padding:26px;display:flex;flex-direction:column;gap:12px}
+.card.live{background:var(--ink);color:var(--white)}
+.tag{align-self:flex-start;font-size:13px;font-weight:600;padding:4px 12px;border-radius:999px;background:var(--paper);color:var(--muted)}
+.card.live .tag{background:var(--yellow);color:var(--ink)}
+.card h3{font-weight:700;font-size:21px;line-height:1.2}
+.card p{margin:0;color:var(--muted);font-size:16px}
+.card.live p{color:rgba(255,255,255,.75)}
+
+/* services */
+.svc{margin:0;border-top:2px solid var(--ink)}
+.svc div{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px 40px;padding-block:22px;border-bottom:1px solid var(--rule);align-items:baseline}
+.svc dt{font:700 clamp(19px,2vw,24px)/1.2 var(--display);letter-spacing:-0.01em}
+.svc dd{margin:0;color:var(--muted)}
+
+/* contact */
+.contact{background:var(--yellow)}
+.contact .wrap{padding-block:88px}
+.contact h2{font-weight:900;font-size:clamp(36px,5.6vw,72px);line-height:1;letter-spacing:-0.03em;max-width:13em}
+.contact p{font-size:20px;margin:22px 0 32px;max-width:30em}
+.reach{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:52px;padding-top:24px;border-top:2px solid var(--ink)}
+.reach span{display:block;font-size:14px;opacity:.7}
+.reach a,.reach strong{font-weight:600;font-size:17px;overflow-wrap:anywhere}
+.foot{background:var(--ink);color:rgba(255,255,255,.7);font-size:14px}
+.foot .wrap{padding-block:22px}
+
+@media (max-width:900px){
+  .hero-grid,.proj{grid-template-columns:1fr}
+  .hero-grid{gap:40px;padding-block:28px 64px}
+  .demo{transform:none}
+  .build{grid-template-columns:1fr}
+  .svc div{grid-template-columns:1fr}
+  .reach{grid-template-columns:1fr}
+  .sec,.contact .wrap{padding-block:60px}
+}
+@media (prefers-reduced-motion: reduce){ .stage i{transition:none} }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <header class="top">
+      <div class="who">Misha Ovsechukh-Khansverov</div>
+      <div class="lang" role="group" aria-label="Language">
+        <button id="btn-en" type="button" aria-pressed="true">EN</button>
+        <button id="btn-uk" type="button" aria-pressed="false">UA</button>
+      </div>
+    </header>
+
+    <div class="hero-grid">
+      <div>
+        <p class="avail"><span class="en">Open to remote work and projects</span><span class="uk">Відкритий до віддаленої роботи та проєктів</span></p>
+        <h1><span class="en">I automate the work your team does by hand.</span><span class="uk">Автоматизую те, що ваша команда робить вручну.</span></h1>
+        <p class="lede">
+          <span class="en">Leads, orders, reminders and reports that move between your CRM, Telegram and other tools on their own. Built with Python, APIs and n8n.</span>
+          <span class="uk">Заявки, замовлення, нагадування і звіти, які самі рухаються між CRM, Telegram та іншими сервісами. На Python, API та n8n.</span>
+        </p>
+        <div class="actions">
+          <a class="btn yellow" href="https://t.me/babbylon9"><span class="en">Message me on Telegram</span><span class="uk">Написати в Telegram</span></a>
+          <a class="btn ghost" href="#work"><span class="en">See projects</span><span class="uk">Дивитися проєкти</span></a>
+        </div>
+      </div>
+
+      <div class="demo">
+        <h2><span class="en">Try it: send a test lead</span><span class="uk">Спробуйте: надішліть заявку</span></h2>
+        <p class="hint"><span class="en">Type a name and watch the workflow run.</span><span class="uk">Введіть ім'я і подивіться, як працює воркфлоу.</span></p>
+        <form id="lead">
+          <label for="lead-name"><span class="en">Lead name</span><span class="uk">Ім'я</span></label>
+          <input id="lead-name" name="lead-name" type="text" value="Olena" maxlength="40" autocomplete="off">
+          <button type="submit" id="lead-send"><span class="en">Send lead</span><span class="uk">Надіслати</span></button>
+        </form>
+        <div class="pipe" aria-hidden="true">
+          <div class="stage on"><i>1</i><span class="en">Form</span><span class="uk">Форма</span></div>
+          <div class="stage on"><i>2</i>CRM</div>
+          <div class="stage on"><i>3</i>Telegram</div>
+        </div>
+        <div class="tg" aria-live="polite">
+          <div class="from">Lead Bot</div>
+          <p><span class="en">New lead: <b class="nm">Olena</b>. Assigned to you. Reply within 15 minutes.</span><span class="uk">Нова заявка: <b class="nm">Olena</b>. Призначено вам. Відповісти протягом 15 хвилин.</span></p>
+          <div class="meta" id="tg-time">12:04</div>
+        </div>
+        <ul class="log" id="log">
+          <li>12:04:17 POST /webhook/lead <b>200</b></li>
+          <li>12:04:18 crm.create_lead <b>ok</b></li>
+          <li>12:04:18 telegram.sendMessage <b>ok</b></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="band">
+  <div class="wrap">
+    <ul>
+      <li><span class="en">I work with</span><span class="uk">Працюю з</span></li>
+      <li>Python</li><li>REST API</li><li>Webhooks</li><li>n8n</li><li>Twenty CRM</li><li>Telegram Bot API</li><li>Google Cloud</li><li>Nova Poshta API</li><li>LLM &amp; AI agents</li><li>Git</li><li>Docker</li>
+    </ul>
+  </div>
+</div>
+
+<section class="sec" id="work">
+  <div class="wrap">
+    <h2><span class="en">Projects</span><span class="uk">Проєкти</span></h2>
+    <p class="sub"><span class="en">What I have built, and the steps each one runs.</span><span class="uk">Що я зробив і які кроки виконує кожен проєкт.</span></p>
+
+    <div class="projects">
+      <article class="proj">
+        <div class="txt">
+          <h3><span class="en">Lead extraction from Google Maps</span><span class="uk">Збір лідів з Google Maps</span></h3>
+          <p><span class="en">A Python tool that collects business data through the official Google Places API and turns it into a clean lead list ready for a CRM.</span><span class="uk">Python-інструмент, який збирає дані про бізнеси через офіційний Google Places API і робить з них чистий список лідів для CRM.</span></p>
+          <p><span class="en">I set up authentication, quotas, pagination and Google Cloud billing, then removed duplicates and normalised the results.</span><span class="uk">Налаштував автентифікацію, квоти, пагінацію і білінг Google Cloud, прибрав дублікати й нормалізував результати.</span></p>
+          <ul class="stack"><li>Python</li><li>Google Places API</li><li>Google Cloud</li><li>CSV</li></ul>
+        </div>
+        <div class="panel p-blue">
+          <p class="cap"><span class="en">How it runs</span><span class="uk">Як це працює</span></p>
+          <ol>
+            <li><span class="en">Choose a niche and a city</span><span class="uk">Вибір ніші та міста</span></li>
+            <li><span class="en">Search places through the API</span><span class="uk">Пошук місць через API</span></li>
+            <li><span class="en">Fetch details for every result</span><span class="uk">Деталі по кожному результату</span></li>
+            <li><span class="en">Clean and remove duplicates</span><span class="uk">Очистка і видалення дублікатів</span></li>
+            <li><span class="en">Export a CSV for the CRM</span><span class="uk">Експорт CSV для CRM</span></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="proj">
+        <div class="txt">
+          <h3><span class="en">AI video pipeline for WHAT IF ARCHIVE</span><span class="uk">AI-пайплайн відео для WHAT IF ARCHIVE</span></h3>
+          <p><span class="en">A complete production process for a faceless pop-science YouTube channel for a US audience, from research to the final edit.</span><span class="uk">Повний цикл виробництва для faceless YouTube-каналу з науково-популярними відео для американської аудиторії: від дослідження до монтажу.</span></p>
+          <p><span class="en">Standard prompts and one dark cinematic style keep every video on the same repeatable process.</span><span class="uk">Стандартні промпти і єдиний темний кінематографічний стиль тримають кожне відео в одному відтворюваному процесі.</span></p>
+          <ul class="stack"><li>LLM</li><li>AI image generation</li><li>Google Veo</li></ul>
+        </div>
+        <div class="panel p-yellow">
+          <p class="cap"><span class="en">How it runs</span><span class="uk">Як це працює</span></p>
+          <ol>
+            <li><span class="en">Research the topic</span><span class="uk">Дослідження теми</span></li>
+            <li><span class="en">Write the script with an LLM</span><span class="uk">Сценарій за допомогою LLM</span></li>
+            <li><span class="en">Generate images in the channel style</span><span class="uk">Зображення у стилі каналу</span></li>
+            <li><span class="en">Animate scenes in Veo</span><span class="uk">Анімація сцен у Veo</span></li>
+            <li><span class="en">Edit and publish</span><span class="uk">Монтаж і публікація</span></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="proj">
+        <div class="txt">
+          <h3><span class="en">Multi-agent AI development workflow</span><span class="uk">Мультиагентний AI-воркфлоу для розробки</span></h3>
+          <p><span class="en">Several AI coding agents work in parallel on research, building and review, supported by a curated set of GitHub tools for orchestration and context.</span><span class="uk">Кілька AI-агентів паралельно працюють над дослідженням, розробкою і рев'ю, з набором GitHub-інструментів для оркестрації та контексту.</span></p>
+          <p><span class="en">I use it to prototype integrations and scripts much faster than by hand.</span><span class="uk">Використовую його, щоб прототипувати інтеграції та скрипти значно швидше, ніж вручну.</span></p>
+          <ul class="stack"><li>Claude Code</li><li>Subagents</li><li>claude-squad</li><li>Git</li></ul>
+        </div>
+        <div class="panel p-ink">
+          <p class="cap"><span class="en">How it runs</span><span class="uk">Як це працює</span></p>
+          <ol>
+            <li><span class="en">Describe the task</span><span class="uk">Опис задачі</span></li>
+            <li><span class="en">A research agent gathers context</span><span class="uk">Агент-дослідник збирає контекст</span></li>
+            <li><span class="en">Builder agents work in parallel</span><span class="uk">Агенти-розробники працюють паралельно</span></li>
+            <li><span class="en">A review agent checks the result</span><span class="uk">Агент-рев'юер перевіряє результат</span></li>
+            <li><span class="en">Merge into Git</span><span class="uk">Мердж у Git</span></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="proj">
+        <div class="txt">
+          <h3><span class="en">Dropshipping platform: product and integration design</span><span class="uk">Дропшипінг-платформа: продукт та інтеграції</span></h3>
+          <p><span class="en">A full specification for a Ukrainian dropshipping SaaS: roles, catalog import, pricing rules, stock reservation, order statuses, the Nova Poshta API, Prom and Rozetka feeds, and signed webhooks.</span><span class="uk">Повна специфікація українського SaaS для дропшипінгу: ролі, імпорт каталогу, правила цін, резервування залишків, статуси замовлень, API Нової пошти, фіди для Prom і Rozetka, підписані вебхуки.</span></p>
+          <p><span class="en">I also designed AI modules that turn Instagram and Telegram chats into orders. The full spec is available on request.</span><span class="uk">Також спроєктував AI-модулі, які перетворюють переписку в Instagram і Telegram на замовлення. Повну специфікацію надам на запит.</span></p>
+          <ul class="stack"><li>System design</li><li>REST</li><li>Webhooks</li><li>Nova Poshta API</li><li>XML/YML</li></ul>
+        </div>
+        <div class="panel p-green">
+          <p class="cap"><span class="en">Order lifecycle</span><span class="uk">Життєвий цикл замовлення</span></p>
+          <ol>
+            <li><span class="en">New order, stock reserved</span><span class="uk">Нове замовлення, товар зарезервовано</span></li>
+            <li><span class="en">Confirmed, waybill created</span><span class="uk">Підтверджено, ТТН створено</span></li>
+            <li><span class="en">Shipped, tracking checked hourly</span><span class="uk">Відправлено, трекінг щогодини</span></li>
+            <li><span class="en">Delivered, seller payout credited</span><span class="uk">Отримано, селеру нараховано виплату</span></li>
+            <li><span class="en">Webhook sent to the seller's site</span><span class="uk">Вебхук на сайт селера</span></li>
+          </ol>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <h2><span class="en">Building now</span><span class="uk">Зараз будую</span></h2>
+    <p class="sub"><span class="en">Working n8n workflows. Video demos appear here as each one is finished.</span><span class="uk">Робочі воркфлоу в n8n. Відео-демо з'являться тут, щойно кожен буде готовий.</span></p>
+    <div class="build">
+      <div class="card live">
+        <span class="tag"><span class="en">In progress</span><span class="uk">У роботі</span></span>
+        <h3><span class="en">Lead to CRM to Telegram</span><span class="uk">Заявка в CRM і Telegram</span></h3>
+        <p><span class="en">A form submission creates a lead, assigns a rep, alerts them in Telegram and schedules a follow-up. Failed steps retry.</span><span class="uk">Заявка з форми створює лід, призначає менеджера, сповіщає його в Telegram і планує фоловап. Невдалі кроки повторюються.</span></p>
+      </div>
+      <div class="card">
+        <span class="tag"><span class="en">Next</span><span class="uk">Далі</span></span>
+        <h3><span class="en">Booking reminders</span><span class="uk">Нагадування про запис</span></h3>
+        <p><span class="en">A calendar booking syncs to the CRM, sends reminders 24 hours and 1 hour before, and follows up with no-shows.</span><span class="uk">Запис у календарі потрапляє в CRM, надсилає нагадування за 24 години і за 1 годину і пише тим, хто не прийшов.</span></p>
+      </div>
+      <div class="card">
+        <span class="tag"><span class="en">Next</span><span class="uk">Далі</span></span>
+        <h3><span class="en">Server-side ad conversions</span><span class="uk">Server-side конверсії</span></h3>
+        <p><span class="en">A won deal in the CRM is sent to the Meta Conversions API, with duplicate events filtered out.</span><span class="uk">Виграна угода в CRM передається в Meta Conversions API з відсіюванням дублів.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <h2><span class="en">What I can set up for you</span><span class="uk">Що можу налаштувати для вас</span></h2>
+    <p class="sub"><span class="en">For online stores, agencies and service businesses.</span><span class="uk">Для інтернет-магазинів, агенцій і сервісного бізнесу.</span></p>
+    <dl class="svc">
+      <div><dt><span class="en">Leads straight into your CRM</span><span class="uk">Заявки одразу в CRM</span></dt><dd><span class="en">From site forms, Instagram and Telegram, with an instant alert to your team.</span><span class="uk">З форм на сайті, Instagram і Telegram, з миттєвим сповіщенням команді.</span></dd></div>
+      <div><dt><span class="en">Reminders and follow-ups</span><span class="uk">Нагадування і фоловапи</span></dt><dd><span class="en">Fewer no-shows and forgotten clients, without writing messages by hand.</span><span class="uk">Менше неявок і забутих клієнтів без ручних повідомлень.</span></dd></div>
+      <div><dt><span class="en">Telegram bots for business</span><span class="uk">Telegram-боти для бізнесу</span></dt><dd><span class="en">Order intake, status updates and a daily summary.</span><span class="uk">Прийом замовлень, статуси і щоденний підсумок.</span></dd></div>
+      <div><dt><span class="en">Lead lists from public data</span><span class="uk">Бази лідів з відкритих даних</span></dt><dd><span class="en">Clean lists without duplicates, built from official APIs.</span><span class="uk">Чисті бази без дублів з офіційних API.</span></dd></div>
+      <div><dt><span class="en">Twenty CRM on your own server</span><span class="uk">Twenty CRM на вашому сервері</span></dt><dd><span class="en">An open-source CRM with no per-user fees, set up with your data imported.</span><span class="uk">Open-source CRM без оплати за кожного користувача, з імпортом ваших даних.</span></dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <h2><span class="en">Tell me what your team still does by hand.</span><span class="uk">Розкажіть, що ваша команда досі робить вручну.</span></h2>
+    <p><span class="en">I'll show you how it could run on its own and what it takes to build.</span><span class="uk">Я покажу, як це може працювати само і що потрібно, щоб це збудувати.</span></p>
+    <a class="btn dark" href="https://t.me/babbylon9"><span class="en">Message me on Telegram</span><span class="uk">Написати в Telegram</span></a>
+    <div class="reach">
+      <div><span>Telegram</span><a href="https://t.me/babbylon9">@babbylon9</a></div>
+      <div><span>Email</span><strong>ovsijshukh2011@gmail.com</strong></div>
+      <div><span>GitHub</span><a href="https://github.com/ovsijshukh2011-del">ovsijshukh2011-del</a></div>
+    </div>
+  </div>
+</section>
+
+<div class="foot"><div class="wrap"><span class="en">Lviv, Ukraine. Remote, UTC+2. Ukrainian native, English B1.</span><span class="uk">Львів, Україна. Віддалено, UTC+2. Українська рідна, англійська B1.</span></div></div>
+
+<script>
+(function(){
+  var html=document.documentElement, en=document.getElementById('btn-en'), uk=document.getElementById('btn-uk');
+  function setLang(l){
+    html.lang=l; en.setAttribute('aria-pressed', String(l==='en')); uk.setAttribute('aria-pressed', String(l==='uk'));
+    try{localStorage.setItem('pf-lang', l)}catch(e){}
+  }
+  en.addEventListener('click',function(){setLang('en')});
+  uk.addEventListener('click',function(){setLang('uk')});
+  try{var saved=localStorage.getItem('pf-lang'); if(saved==='en'||saved==='uk') setLang(saved);}catch(e){}
+
+  var form=document.getElementById('lead'), input=document.getElementById('lead-name'),
+      stages=[].slice.call(document.querySelectorAll('.stage')), log=document.getElementById('log'),
+      names=[].slice.call(document.querySelectorAll('.nm')), time=document.getElementById('tg-time'),
+      send=document.getElementById('lead-send'),
+      reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches, busy=false;
+  function pad(n){return String(n).padStart(2,'0')}
+  function stamp(){var d=new Date();return pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds())}
+  function line(t){var li=document.createElement('li');li.innerHTML=t;log.appendChild(li);while(log.children.length>3)log.removeChild(log.firstChild)}
+  form.addEventListener('submit',function(e){
+    e.preventDefault(); if(busy) return;
+    var name=(input.value||'').trim().slice(0,40)||'Olena';
+    busy=true; send.disabled=true;
+    stages.forEach(function(s){s.classList.remove('on','run')});
+    var steps=[
+      function(){line(stamp()+' POST /webhook/lead <b>200</b>')},
+      function(){line(stamp()+' crm.create_lead <b>ok</b>')},
+      function(){line(stamp()+' telegram.sendMessage <b>ok</b>'); names.forEach(function(n){n.textContent=name}); var d=new Date(); time.textContent=pad(d.getHours())+':'+pad(d.getMinutes())}
+    ];
+    var gap=reduce?0:600, i=0;
+    (function next(){
+      if(i>0){stages[i-1].classList.remove('run');stages[i-1].classList.add('on')}
+      if(i===stages.length){busy=false;send.disabled=false;return}
+      stages[i].classList.add('run'); steps[i](); i++;
+      setTimeout(next,gap);
+    })();
+  });
+})();
+</script>
+</body>
+</html>
